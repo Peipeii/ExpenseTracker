@@ -6,17 +6,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>廣志の私帳</title>
   <link rel="stylesheet" href="https://bootswatch.com/4/sketchy/bootstrap.min.css">
+  <!-- include fontawesome stylesheets -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+    integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <style type="text/css">
+    .highlight {
+      background: url(https://www.andyhooke.co.uk/wp-content/uploads/2018/02/yellow-brushstroke.png);
+      background-position: 25% 75%;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 5px;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    mark {
+      display: inline-block;
+      line-height: 0em;
+      padding-bottom: 0.5em;
+    }
+
+    .fa-edit,
+    .fa-trash-alt {
+      color: gray
+    }
+
+    .fa-edit:hover,
+    .fa-trash-alt:hover {
+      cursor: pointer;
+      transform: scale(1.2);
+      color: black;
+    }
+  </style>
 </head>
 
 <body class="bg-light">
   <header>
-    <nav class="navbar navbar-dark bg-primary justify-content-between">
+    <nav class="navbar navbar-dark bg-primary justify-content-between m-1">
       <a class="navbar-brand" href="/">廣志の私帳</a>
       <a class="btn btn-outline-light" href="/records/new">記一筆</a>
     </nav>
   </header>
   <main>
-    <div class="container mt-3">
+    <div class="container mt-4">
       {{{ body }}}
     </div>
   </main>

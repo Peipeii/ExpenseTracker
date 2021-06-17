@@ -9,6 +9,10 @@ const recordSchema = new Schema({
     type: String,
     required: true
   },
+  categoryIcon: {
+    type: String,
+    defult: 'fa-pen'
+  },
   date: {
     type: String,
     required: true
@@ -16,11 +20,12 @@ const recordSchema = new Schema({
   amount: {
     type: Number,
     required: true
-  },
-  totalAmount: {
-    type: Number,
-    required: true
   }
+  // ,
+  // totalAmount: {
+  //   type: Number,
+  //   required: true
+  // }
 })
 
 module.exports = mongoose.model('Record', recordSchema)

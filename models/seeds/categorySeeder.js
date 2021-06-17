@@ -10,6 +10,4 @@ db.once('open', () => {
     Category.create(categoryList.results[key])
   }
   console.log('category seeder done')
-
-  console.log('done')
 })
