@@ -2,12 +2,23 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../../models/record')
+const Category = require('../../models/category')
+const home = require('./home')
+const moment = require('moment')
 
 router.get('/new', (req, res) => {
-  return res.render('new')
+  //const today = moment().format("dddd, MMMM DD YYYY")
+  const today = moment().format("YYYY-MM-DD")
+
+  return Category.find()
+    .lean()
+    .sort({ _id: 'asc' })
+    .then(categories => res.render('new', { categories, today }))
+    .catch(error => console.error(error))
 })
 
 router.post('/', (req, res) => {
+  console.log('add:' + req.body)
   const { name, category, date, amount } = req.body
   return Record.create({ name, category, date, amount })
     .then(() => res.redirect('/'))
