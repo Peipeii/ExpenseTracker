@@ -3,13 +3,11 @@ const express = require('express')
 const router = express.Router()
 const Record = require('../../models/record')
 const Category = require('../../models/category')
-const home = require('./home')
+const Helpers = require('../../helpers/hbshelpers')
 const moment = require('moment')
 
 router.get('/new', (req, res) => {
-  //const today = moment().format("dddd, MMMM DD YYYY")
   const today = moment().format("YYYY-MM-DD")
-
   return Category.find()
     .lean()
     .sort({ _id: 'asc' })
@@ -18,9 +16,11 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  console.log('add:' + req.body)
   const { name, category, date, amount } = req.body
-  return Record.create({ name, category, date, amount })
+  const formatDate = moment(date).format('MMMM DD, YYYY')
+  let categoryIcon = Helpers.getCategoryIcon(Helpers.categoryList, category)
+  if (categoryIcon === null) { categoryIcon = 'fa-pen' }
+  return Record.create({ name, category, categoryIcon, date: formatDate, amount })
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
@@ -57,3 +57,4 @@ router.delete('/:id', (req, res) => {
 })
 
 module.exports = router
+

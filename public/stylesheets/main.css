@@ -1,0 +1,58 @@
+.highlight {
+  background: url(https://www.andyhooke.co.uk/wp-content/uploads/2018/02/yellow-brushstroke.png);
+  background-position: 25% 75%;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+mark {
+  display: inline-block;
+  line-height: 0em;
+  padding-bottom: 0.5em;
+}
+
+.fa-edit, .fa-trash-alt {
+  color: gray
+}
+
+.fa-edit:hover, .fa-trash-alt:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+  color: black;
+}
+
+span::after {
+  padding-left: 10px;
+}
+
+.validity {
+  display: none;
+}
+
+input:invalid+span::after {
+  color: tomato;
+  content: '✗';
+}
+
+input:valid+span::after {
+  color: green;
+  content: '✓';
+}
+
+select:invalid+span::after {
+  color: tomato;
+  content: '✗';
+}
+
+select:valid+span::after {
+  color: green;
+  content: '✓';
+}
+
+form.validated .form-control:invalid~.validity, form.validated .form-control:valid~.validity, .errormsg {
+  display: initial;
+  /* 顯示 */
+}

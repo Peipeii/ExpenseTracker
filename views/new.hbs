@@ -4,57 +4,76 @@
     <div class="col-12 col-lg-10 col-xl-8 mx-auto">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Add New Expense</h5>
+          <h5 class="card-title"><mark>Add New Expense</mark></h5>
           <small class="text-muted form-text">＊必填欄位</small>
-
           <hr>
-          <form method="POST" action="/records">
+
+          <form method="POST" action="/records" id="form" novalidate>
             <div class="form-group form-row">
               <label for="date" class="col-md-4 col-form-label">日期＊</label>
-              <div class="col-md-8">
-                <input type="date" class="form-control" id="date" name="date" value="{{today}}">
+              <div class="col-md-6 d-flex align-items-center">
+                <input type="date" class="form-control" id="date" name="date" value="{{today}}" required>
+                <span class="validity"></span>
               </div>
             </div>
 
             <div class=" form-group form-row">
               <label for="name" class="col-md-4 col-form-label">名稱＊</label>
-              <div class="col-md-8">
-                <input type="text" class="form-control" id="name" name="name">
+              <div class="col-md-6 d-flex align-items-center">
+                <input type="text" class="form-control" id="name" name="name" required>
+                <span class="validity"></span>
               </div>
             </div>
 
             <div class="form-group form-row">
               <label for="category" class="col-md-4 col-form-label">類別＊</label>
-              <div class="col-md-8">
-                <select class="form-control" id="category" name="category">
-                  <option value="" selected disabled hidden>請選擇</option>
+              <div class="col-md-6 d-flex align-items-center">
+                <select class="form-control" id="category" name="category" required>
+                  <option value="" selected disabled>請選擇</option>
                   {{#each categories}}
                   <option>{{this.name}}</option>
                   {{/each}}
                 </select>
+                <span class="validity"></span>
               </div>
             </div>
 
             <div class="form-group form-row">
               <label for="amount" class="col-md-4 col-form-label">金額＊</label>
-              <div class="col-md-8">
-                <input type="number" class="form-control" id="amount" name="amount" min="0">
+              <div class="col-md-6 d-flex align-items-center">
+                <input type="number" class="form-control" id="amount" name="amount" min="0" step="10" required>
+                <span class="validity"></span>
               </div>
             </div>
 
-            <div class="form-group form-row card-footer text-muted text-right border-top-0 mt-5">
+            <div id="errmsg" class="alert alert-danger text-center sr-only" role="alert">
+              <span class="mr-2 errormsg">請正確填入必要欄位</span><code>＊</code>
+            </div>
+            <div class="form-group form-row card-footer text-muted text-right border-top-0 mt-4">
               <div class="col-md-12">
-                <button class="btn btn-info w-25" type="submit">儲存</button>
+                <button class="btn btn-info w-25" type="submit" id="submitButton">儲存</button>
               </div>
             </div>
           </form>
         </div>
 
-        {{!-- <small class="card-footer text-muted text-right">
-          <button class="btn btn-info w-25" type="submit">儲存</button>
-        </small> --}}
-
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  const submitButton = document.querySelector('#submitButton')
+  const form = document.querySelector('#form')
+  form.addEventListener('submit', function onFormSubmitted(event) {
+    if (!form.checkValidity()) {
+      event.stopPropagation()
+      event.preventDefault()
+      document.querySelector('#errmsg').classList.remove('sr-only')
+    }
+  })
+
+  submitButton.addEventListener('click', function onSubmitButtonClicked(event) {
+    form.classList.add('validated')
+  })
+</script>

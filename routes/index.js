@@ -13,7 +13,6 @@ router.use(function timeLog(req, res, next) {
 // 引入 home 模組程式碼
 const home = require('./modules/home')
 router.use('/', home)
-// router.use('/', home.router)
 
 
 // 引入 records 模組程式碼
