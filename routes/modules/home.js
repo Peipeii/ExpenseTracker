@@ -14,7 +14,8 @@ router.get('/', (req, res) => {
     .then((results) => {
       const [categories, records] = results
       Helpers.categoryList = categories
-      res.render('index', { records, categories })
+      const totalAmount = Helpers.calculateTotal(records)
+      res.render('index', { records, categories, totalAmount })
     })
     .catch(error => console.error(error))
 })

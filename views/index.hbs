@@ -13,11 +13,11 @@
     </div>
     <div class="p-3 mt-3">
       <h6>- Total Expenses -</h6>
-      <h1 class="highlight text-center">$ 0</h1>
+      <h1 class="highlight text-center">$ {{totalAmount}}</h1>
     </div>
   </div>
 
-  <div class="p-3">
+  <div class="p-3" id="dataPanel">
     <div class="row pt-2 pb-2 mb-2 bg-white">
       <div class="col-md-2 mx-auto">類別</div>
       <div class="col-md-6 mx-auto">名稱</div>
@@ -27,16 +27,51 @@
     </div>
     {{#each records}}
     <div class="row my-2 border-bottom border-white">
-      <div class="col-md-2 mx-auto"><i class="fas {{this.categoryIcon}} fa-lg"></i></div>
+      <div class="col-md-2 mx-auto" style="display: inline;"><i class="fas {{this.categoryIcon}} fa-lg"></i></div>
       <div class="col-md-6 mx-auto d-flex flex-column">
         <span>{{this.name}}</span>
         <span>{{this.date}}</span>
       </div>
       <div class="col-md-2 mx-auto">{{this.amount}}</div>
-      <div class="col-md-1 mx-auto"><i class="far fa-edit"></i></div>
-      <div class="col-md-1 mx-auto"><i class="far fa-trash-alt"></i></div>
+      <div class="col-md-1 mx-auto">
+        <a href="/records/{{ this._id }}/edit"><i class="far fa-edit text-info"></i></a>
+      </div>
+      <div class="col-md-1 mx-auto">
+        <!-- delete icon trigger modal -->
+        <i class="far fa-trash-alt text-danger" data-toggle="modal" data-target="#deleteModal"
+          data-name="{{ this.name }}" data-id="{{ this._id }}"></i>
+      </div>
     </div>
     {{/each}}
   </div>
-
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">取消</button>
+        <form id="modalForm">
+          <button type="submit" class="btn btn-primary btn-sm">確定刪除</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const form = document.querySelector('#modalForm')
+  const dataPanel = document.querySelector('#dataPanel')
+  const modalBody = document.querySelector('.modal-body')
+  dataPanel.addEventListener('click', function onPanelClicked(event) {
+    modalBody.innerHTML = `確定刪除此筆 <span><mark><em>${event.target.dataset.name}</mark></em></span> 紀錄嗎？`
+
+    if (event.target.matches('.fa-trash-alt')) {
+      form.method = 'POST'
+      form.action = `/records/${event.target.dataset.id}?_method=DELETE`
+    }
+  })
+</script>

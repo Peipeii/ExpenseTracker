@@ -6,7 +6,14 @@ function getCategoryIcon(arr, val) {
   return null
 }
 
+function calculateTotal(records) {
+  const result = records.map(a => a.amount)
+  const sum = result.reduce((a, b) => a + b, 0)
+  return sum
+}
+
 module.exports = {
   categoryList,
-  getCategoryIcon
+  getCategoryIcon,
+  calculateTotal
 }
