@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const Record = require('../../models/record')
 const Category = require('../../models/category')
-const Helpers = require('../../helpers/hbshelpers')
+const PublicFunc = require('../../public/javascript/main')
 const moment = require('moment')
 
 router.get('/new', (req, res) => {
@@ -17,10 +17,10 @@ router.get('/new', (req, res) => {
 
 router.post('/', (req, res) => {
   const { name, category, date, amount } = req.body
-  const formatDate = moment(date).format('MMMM DD, YYYY')
-  let categoryIcon = Helpers.getCategoryIcon(Helpers.categoryList, category)
+  //const formatDate = moment(date).format('MMMM DD, YYYY')
+  let categoryIcon = PublicFunc.getCategoryIcon(PublicFunc.categoryList, category)
   if (categoryIcon === null) { categoryIcon = 'fa-pen' }
-  return Record.create({ name, category, categoryIcon, date: formatDate, amount })
+  return Record.create({ name, category, categoryIcon, date, amount })
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
@@ -29,22 +29,24 @@ router.get('/:id/edit', (req, res) => {
   const id = req.params.id
   return Record.findById(id)
     .lean()
-    .then(record => res.render('edit', { record }))
+    .then(record => res.render('edit', { record, categories: PublicFunc.categoryList }))
     .catch(error => console.log(error))
 })
 
 router.put('/:id', (req, res) => {
   const id = req.params.id
+  console.log(req.body)
   const { name, category, date, amount } = req.body
   return Record.findById(id)
     .then(record => {
       record.name = name
       record.category = category
+      record.categoryIcon = PublicFunc.getCategoryIcon(PublicFunc.categoryList, category)
       record.date = date
       record.amount = amount
       return record.save()
     })
-    .then(() => res.redirect(`/records/${id}`))
+    .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 

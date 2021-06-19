@@ -4,49 +4,49 @@
       "name": "租金",
       "category": "家居物業",
       "categoryIcon": "fa-home",
-      "date": "Jun 16, 2021",
+      "date": "2021-06-16",
       "amount": "27000"
     },
     {
       "name": "捷運",
       "category": "交通出行",
       "categoryIcon": "fa-shuttle-van",
-      "date": "Jun 16, 2021",
+      "date": "2021-06-16",
       "amount": "50"
     },
     {
       "name": "早餐",
       "category": "餐飲食品",
       "categoryIcon": "fa-utensils",
-      "date": "Jun 16, 2021",
+      "date": "2021-06-16",
       "amount": "90"
     },
     {
       "name": "咖啡",
       "category": "餐飲食品",
       "categoryIcon": "fa-utensils",
-      "date": "Jun 16, 2021",
+      "date": "2021-06-16",
       "amount": "65"
     },
     {
       "name": "健身",
       "category": "休閒娛樂",
       "categoryIcon": "fa-grin-beam",
-      "date": "Jun 16, 2021",
+      "date": "2021-06-16",
       "amount": "120"
     },
     {
       "name": "晚餐",
       "category": "餐飲食品",
       "categoryIcon": "fa-utensils",
-      "date": "Jun 16, 2021",
+      "date": "2021-06-16",
       "amount": "499"
     },
     {
       "name": "書局",
       "category": "其他",
       "categoryIcon": "fa-pen",
-      "date": "Jun 16, 2021",
+      "date": "2021-06-16",
       "amount": "278"
     }
   ]

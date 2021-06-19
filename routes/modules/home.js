@@ -5,7 +5,7 @@ const router = express.Router()
 // 引用 Category & Record model
 const Category = require('../../models/category')
 const Record = require('../../models/record')
-const Helpers = require('../../helpers/hbshelpers')
+const PublicFunc = require('../../public/javascript/main')
 
 // 定義首頁路由
 router.get('/', (req, res) => {
@@ -13,8 +13,8 @@ router.get('/', (req, res) => {
   Promise.all([Category.find().lean().sort({ _id: 'asc' }), Record.find().lean().sort({ _id: 'asc' })])
     .then((results) => {
       const [categories, records] = results
-      Helpers.categoryList = categories
-      const totalAmount = Helpers.calculateTotal(records)
+      PublicFunc.categoryList = categories
+      const totalAmount = PublicFunc.calculateTotal(records)
       res.render('index', { records, categories, totalAmount })
     })
     .catch(error => console.error(error))

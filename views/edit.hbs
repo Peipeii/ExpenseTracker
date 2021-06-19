@@ -1,0 +1,63 @@
+<!-- ./views/layouts/edit.handlebars -->
+<div class="container py-5">
+  <div class="row">
+    <div class="col-12 col-lg-10 col-xl-8 mx-auto">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><mark>Edit Expense</mark></h5>
+          <small class="text-muted form-text">＊必填欄位</small>
+          <hr>
+
+          <form action="/records/{{ record._id }}?_method=PUT" method="POST" id="form" novalidate>
+            <div class="form-group form-row">
+              <label for="date" class="col-md-4 col-form-label">日期＊</label>
+              <div class="col-md-6 d-flex align-items-center">
+                <input type="date" class="form-control" id="date" name="date" value="{{ record.date }}" required>
+                <span class="validity"></span>
+              </div>
+            </div>
+
+            <div class=" form-group form-row">
+              <label for="name" class="col-md-4 col-form-label">名稱＊</label>
+              <div class="col-md-6 d-flex align-items-center">
+                <input type="text" class="form-control" id="name" name="name" value="{{ record.name }}" required>
+                <span class="validity"></span>
+              </div>
+            </div>
+
+            <div class="form-group form-row">
+              <label for="category" class="col-md-4 col-form-label">類別＊</label>
+              <div class="col-md-6 d-flex align-items-center">
+                <select class="form-control" id="category" name="category" required>
+                  {{#each categories}}
+                  <option {{#ifCond this.name ../record.category}} selected {{/ifCond}}>{{ this.name }}</option>
+                  {{/each}}
+                </select>
+                <span class="validity"></span>
+              </div>
+            </div>
+
+            <div class="form-group form-row">
+              <label for="amount" class="col-md-4 col-form-label">金額＊</label>
+              <div class="col-md-6 d-flex align-items-center">
+                <input type="number" class="form-control" id="amount" name="amount" min="0" value="{{ record.amount }}"
+                  required>
+                <span class="validity"></span>
+              </div>
+            </div>
+
+            <div id="errmsg" class="alert alert-danger text-center sr-only" role="alert">
+              <span class="mr-2 errormsg">請正確填入必要欄位</span><code>＊</code>
+            </div>
+            <div class="form-group form-row card-footer text-muted text-right border-top-0 mt-4">
+              <div class="col-md-12">
+                <button class="btn btn-info w-25" type="submit" id="submitButton">儲存</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
