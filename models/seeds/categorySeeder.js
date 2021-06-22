@@ -1,13 +1,15 @@
 const Category = require('../category')
 const db = require('../../config/mongoose')
-const categoryList = require('./category.json')
-
+const { results } = require('./category.json')
 
 db.once('open', () => {
-  console.log('mongodb connected')
-
-  for (var key in categoryList.results) {
-    Category.create(categoryList.results[key])
-  }
-  console.log('category seeder done')
+  Category.create(results)
+    .then(() => {
+      console.log('category seeder done')
+      return db.close()
+    })
+    .then(() => {
+      console.log('mongodb disconnected!')
+    })
+    .catch(err => console.log(err))
 })

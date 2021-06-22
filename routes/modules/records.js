@@ -7,7 +7,7 @@ const PublicFunc = require('../../public/javascript/main')
 const moment = require('moment')
 
 router.get('/new', (req, res) => {
-  const today = moment().format("YYYY-MM-DD")
+  const today = moment().format('YYYY-MM-DD')
   return Category.find()
     .lean()
     .sort({ _id: 'asc' })
@@ -19,8 +19,7 @@ router.get('/filter', (req, res) => {
   const categoryFilter = req.query.category
   if (categoryFilter === '') {
     res.redirect('/')
-  }
-  else {
+  } else {
     return Record.find({ category: categoryFilter })
       .lean()
       .then((records) => {
@@ -36,7 +35,6 @@ router.get('/filter', (req, res) => {
 
 router.post('/', (req, res) => {
   const { name, category, date, amount } = req.body
-  //const formatDate = moment(date).format('MMMM DD, YYYY')
   let categoryIcon = PublicFunc.getCategoryIcon(PublicFunc.categoryList, category)
   if (categoryIcon === null) { categoryIcon = 'fa-pen' }
   return Record.create({ name, category, categoryIcon, date, amount })
@@ -78,4 +76,3 @@ router.delete('/:id', (req, res) => {
 })
 
 module.exports = router
-

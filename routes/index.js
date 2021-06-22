@@ -14,11 +14,9 @@ router.use(function timeLog(req, res, next) {
 const home = require('./modules/home')
 router.use('/', home)
 
-
 // 引入 records 模組程式碼
 const records = require('./modules/records')
 router.use('/records', records)
-
 
 // 準備引入路由模組
 // 匯出路由器
