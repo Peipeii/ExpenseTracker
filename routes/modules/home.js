@@ -9,7 +9,6 @@ const PublicFunc = require('../../public/javascript/main')
 
 // 定義首頁路由
 router.get('/', (req, res) => {
-
   Promise.all([Category.find().lean().sort({ _id: 'asc' }), Record.find().lean().sort({ _id: 'asc' })])
     .then((results) => {
       const [categories, records] = results

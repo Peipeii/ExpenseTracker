@@ -1,42 +1,50 @@
 <!--  ./views/index.handlebars -->
-<div class="container w-50 p-5 rounded" style="background-color:#EAE7E6">
-  <div>
+<div class="container w-50 p-4 rounded" style="background-color:#EAE7E6">
+  <form id="filterForm" action="/records/filter" method="GET">
     <div class="p-1 btn-group">
       <button type="button" class="btn btn-outline-light text-info dropdown-toggle" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-filter mr-1"></i>篩選類別
+        <span id="filterSpan"><i class="fas fa-filter mr-1"></i>
+          {{#if categoryFilter}} {{categoryFilter}} {{else}} 篩選類別{{/if}}
+        </span>
+        <input type="hidden" id="filterCategory" name="category" value="{{categoryFilter}}" />
         <div class="dropdown-menu">
+          <a class="dropdown-item" href="#"><i class="fas fa-store mr-2 text-secondary fa-sm"></i>全部類別</a>
+          <div class="dropdown-divider"></div>
           {{#each categories}}
           <a class="dropdown-item" href="#"><i class="fas {{this.code}} mr-2 text-secondary fa-sm"></i>{{this.name}}</a>
           {{/each}}
         </div>
+      </button>
     </div>
-    <div class="p-3 mt-3">
-      <h6>- Total Expenses -</h6>
-      <h1 class="highlight text-center">$ {{totalAmount}}</h1>
+
+    <div class="p-3 mt-2 row">
+      <h6 class="col-sm-auto col-md-12">- Total Expenses -</h6>
+      <h1 class="highlight text-center col-sm-auto col-md-12">$ {{totalAmount}}</h1>
     </div>
-  </div>
+  </form>
 
   <div class="p-3" id="dataPanel">
     <div class="row pt-2 pb-2 mb-2 bg-white">
-      <div class="col-md-2 mx-auto">類別</div>
-      <div class="col-md-6 mx-auto">名稱</div>
-      <div class="col-md-2 mx-auto">金額</div>
-      <div class="col-md-1 mx-auto"></div>
-      <div class="col-md-1 mx-auto"></div>
+      <div class="col-12 col-md-2 mx-auto">類別</div>
+      <div class="col-sm-auto col-md-4 mx-auto">名稱</div>
+      <div class="col-sm-auto col-md-2 mx-auto">金額</div>
+      <div class="col-sm-auto col-md-1 mx-auto"></div>
+      <div class="col-sm-auto col-md-1 mx-auto"></div>
     </div>
     {{#each records}}
     <div class="row my-2 border-bottom border-white">
-      <div class="col-md-2 mx-auto" style="display: inline;"><i class="fas {{this.categoryIcon}} fa-lg"></i></div>
-      <div class="col-md-6 mx-auto d-flex flex-column">
+      <div class="col-12 col-md-2 mx-auto" style="display: inline;"><i class="fas {{this.categoryIcon}} fa-lg"></i>
+      </div>
+      <div class="col-sm-auto col-md-4 mx-auto d-flex flex-column">
         <span>{{this.name}}</span>
         <span>{{this.date}}</span>
       </div>
-      <div class="col-md-2 mx-auto">{{this.amount}}</div>
-      <div class="col-md-1 mx-auto">
+      <div class="col-sm-auto col-md-2 mx-auto">{{this.amount}}</div>
+      <div class="col-sm-auto col-md-1 mx-auto">
         <a href="/records/{{ this._id }}/edit"><i class="far fa-edit text-info"></i></a>
       </div>
-      <div class="col-md-1 mx-auto">
+      <div class="col-sm-auto col-md-1 mx-auto">
         <!-- delete icon trigger modal -->
         <i class="far fa-trash-alt text-danger" data-toggle="modal" data-target="#deleteModal"
           data-name="{{ this.name }}" data-id="{{ this._id }}"></i>
@@ -63,15 +71,30 @@
 </div>
 
 <script>
-  const form = document.querySelector('#modalForm')
+  const modalForm = document.querySelector('#modalForm')
   const dataPanel = document.querySelector('#dataPanel')
   const modalBody = document.querySelector('.modal-body')
+  const dropdownItems = document.querySelectorAll('.dropdown-item')
+  const filterSpan = document.querySelector('#filterSpan')
+  const filterForm = document.querySelector('#filterForm')
+  const filterCategory = document.querySelector('#filterCategory')
+
   dataPanel.addEventListener('click', function onPanelClicked(event) {
     modalBody.innerHTML = `確定刪除此筆 <span><mark><em>${event.target.dataset.name}</mark></em></span> 紀錄嗎？`
 
     if (event.target.matches('.fa-trash-alt')) {
-      form.method = 'POST'
-      form.action = `/records/${event.target.dataset.id}?_method=DELETE`
+      modalForm.method = 'POST'
+      modalForm.action = `/records/${event.target.dataset.id}?_method=DELETE`
     }
   })
+
+  Array.from(dropdownItems).forEach(item => {
+    item.addEventListener('click', function (event) {
+      filterSpan.innerHTML = `<i class="fas fa-filter mr-1"></i>${this.text}`
+      filterCategory.value = (this.text === "全部類別") ? '' : this.text
+      filterForm.submit()
+    })
+  });
+
+
 </script>

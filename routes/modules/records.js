@@ -15,6 +15,25 @@ router.get('/new', (req, res) => {
     .catch(error => console.error(error))
 })
 
+router.get('/filter', (req, res) => {
+  const categoryFilter = req.query.category
+  if (categoryFilter === '') {
+    res.redirect('/')
+  }
+  else {
+    return Record.find({ category: categoryFilter })
+      .lean()
+      .then((records) => {
+        console.log(records)
+        if (records.length >= 0) {
+          const totalAmount = PublicFunc.calculateTotal(records)
+          res.render('index', { records, categories: PublicFunc.categoryList, totalAmount, categoryFilter })
+        }
+      })
+      .catch(error => console.log(error))
+  }
+})
+
 router.post('/', (req, res) => {
   const { name, category, date, amount } = req.body
   //const formatDate = moment(date).format('MMMM DD, YYYY')
