@@ -5,7 +5,7 @@ const router = express.Router()
 const moment = require('moment')
 
 // middleware that is specific to this router
-router.use(function timeLog(req, res, next) {
+router.use(function timeLog (req, res, next) {
   console.log(`${moment().format('YYYY-MM-DD HH:mm:ss')} | ${req.method}  ${req.url}`)
   next()
 })
